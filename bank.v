@@ -6,13 +6,13 @@
 //======================================================================
 
 module bank (   
-			// General signals
-				input 				clk
-				input 				rst,
-			// Slave banking signals				
-                input 		[3:0] 	bid,
-                input 				granted,
-                output reg 	[9:0] 	balance
+// General signals
+				input 	clk
+				input 	rst,
+// Slave banking signals				
+                		input 	   [3:0] bid,
+                		input 		 granted,
+                		output reg [9:0] balance
             );
 
   //----------------------------------------------------------------
