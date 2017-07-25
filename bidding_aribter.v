@@ -6,8 +6,8 @@
 //======================================================================
 
 module bidding_aribter (
-						input  			clk,
-						input  			rst,					
+						input  		clk,
+						input  		rst,					
 						input  [3:0] 	bid_0,
 						input  [3:0] 	bid_1,
 						input  [3:0] 	bid_2,
