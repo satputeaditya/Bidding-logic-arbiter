@@ -6,29 +6,27 @@
 //======================================================================
 
 module bank (   
-// General signals
-				input 	clk
-				input 	rst,
-// Slave banking signals				
-                		input 	   [3:0] bid,
-                		input 		 granted,
-                		output reg [9:0] balance
+			// General signals
+				input 				clk,
+				input 				rst,
+			// Slave banking signals				
+                input 		[3:0] 	bid,
+                input 				granted,
+                output reg 	[9:0] 	balance
             );
 
-  //----------------------------------------------------------------
+  //--------------------------
   // Register declarations.
-  //----------------------------------------------------------------
+  //--------------------------
   reg [9:0] banker; 
 
-  //----------------------------------------------------------------
-  // aes_data_in
+  //--------------------------
+  // banking_logic
   //
-  // Update functionality for all registers in the core.
-  // All registers are positive edge triggered with asynchronous
-  // active high reset. 
-  //----------------------------------------------------------------
+  // logic for banking system
+  //--------------------------
   always@(negedge clk, posedge rst)
-    begin :     
+    begin : banking_logic    
         if (rst)
             begin
                 balance = 750;  
@@ -44,7 +42,7 @@ module bank (
 									else balance = (balance == 1)? 1: (((balance - bid) == 0) ?  1 : (balance - bid));      // reduces bid amount to maintain bank balance 
                     else balance = balance;          
             end
-	end
+	end // banking_logic
 
 endmodule // bank
  
