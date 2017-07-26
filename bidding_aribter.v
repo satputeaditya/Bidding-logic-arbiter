@@ -6,8 +6,8 @@
 //======================================================================
 
 module bidding_aribter (
-						input  		clk,
-						input  		rst,					
+						input  			clk,
+						input  			rst,					
 						input  [3:0] 	bid_0,
 						input  [3:0] 	bid_1,
 						input  [3:0] 	bid_2,
@@ -91,10 +91,10 @@ module bidding_aribter (
 							begin 
 								equal (bid_0,bid_1,bid_2,bid_3,valid_balance,equal_bid);  // calculate which slaves have equal bids
 								$display("TP8"); 
-										highest_bid  = 	(((equal_bid[0]==1) && (last_granted[0]=='b0) ? Slave0 : 
-														 ((equal_bid[1]==1) && (last_granted[1]=='b0) ? Slave1 : 
-														 ((equal_bid[2]==1) && (last_granted[2]=='b0) ? Slave2 : 
-														 ((equal_bid[3]==1) && (last_granted[3]=='b0) ? Slave3 : None))))) ;  
+										highest_bid  = 	(( (equal_bid[0]==1) && (last_granted ==! Slave0) ? Slave0 : 
+														 ( (equal_bid[1]==1) && (last_granted ==! Slave1) ? Slave1 : 
+														 ( (equal_bid[2]==1) && (last_granted ==! Slave2) ? Slave2 : 
+														 ( (equal_bid[3]==1) && (last_granted ==! Slave3) ? Slave3 : None))))) ;  
 							end
   //  PRIORITY 5 : check for highest bid only
 					else 
@@ -126,7 +126,7 @@ module bidding_aribter (
 				count_since_last_grant1 <= ((result[1]) | (bid_1 == 'b0)) ? 'b0 : (count_since_last_grant1 +1);           // start counter to count cycles since last grant , count even if no bid by master 
 				count_since_last_grant2 <= ((result[2]) | (bid_2 == 'b0)) ? 'b0 : (count_since_last_grant2 +1);           // start counter to count cycles since last grant , count even if no bid by master 
 				count_since_last_grant3 <= ((result[3]) | (bid_3 == 'b0)) ? 'b0 : (count_since_last_grant3 +1);           // start counter to count cycles since last grant , count even if no bid by master 
-				last_granted 			<= result;                                        							 	  // flopping to store which master was last granted                     				
+				last_granted 			<= highest_bid;                                        							 	  // flopping to store which master was last granted                     				
             end
 	end // last_granted_counter	
 
